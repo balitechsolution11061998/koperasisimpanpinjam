@@ -330,6 +330,11 @@ return [
             'url' => 'simpanan', // Adjust this URL to match your route
             'icon' => 'fas fa-fw fa-money-bill-wave', // You can choose an appropriate icon
         ],
+        [
+            'text' => 'Loans', // New menu item for Loans
+            'url' => 'loans', // Adjust this URL to match your route
+            'icon' => 'fas fa-fw fa-hand-holding-usd', // Icon for Loans
+        ],
     ],
 
 

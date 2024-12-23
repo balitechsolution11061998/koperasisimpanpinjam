@@ -4,6 +4,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SimpananController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +35,5 @@ Route::resource('anggota', AnggotaController::class)->except(['show']);
 Route::get('anggota/data', [AnggotaController::class, 'getData'])->name('anggota.data');
 Route::resource('simpanan', SimpananController::class)->except(['show']);
 Route::get('simpanan/data', [SimpananController::class, 'data'])->name('simpanan.data');
+Route::resource('loans', LoanController::class)->except(['show']);
+Route::get('loans/data', [LoanController::class, 'data'])->name('loans.data');
