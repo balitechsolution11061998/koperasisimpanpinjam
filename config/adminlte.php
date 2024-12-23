@@ -317,7 +317,7 @@ return [
         ],
         [
             'text' => 'Dashboard',
-            'url' => 'admin/dashboard',
+            'url' => 'dashboard',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
@@ -326,46 +326,9 @@ return [
             'icon' => 'fas fa-fw fa-users',
         ],
         [
-            'text' => 'Loans',
-            'url' => 'admin/loans',
-            'icon' => 'fas fa-fw fa-hand-holding-usd',
-        ],
-        [
-            'text' => 'Savings',
-            'url' => 'admin/savings',
-            'icon' => 'fas fa-fw fa-money-bill-wave',
-        ],
-        [
-            'text' => 'Reports',
-            'url' => 'admin/reports',
-            'icon' => 'fas fa-fw fa-chart-line',
-        ],
-        ['header' => 'Account Settings'],
-        [
-            'text' => 'Profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Change Password',
-            'url' => 'admin/settings/change-password',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        ['header' => 'Labels'],
-        [
-            'text' => 'Important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'Warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'Information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Simpanan', // New menu item for Savings
+            'url' => 'simpanan', // Adjust this URL to match your route
+            'icon' => 'fas fa-fw fa-money-bill-wave', // You can choose an appropriate icon
         ],
     ],
 

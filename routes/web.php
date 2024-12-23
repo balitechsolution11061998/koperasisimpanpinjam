@@ -4,6 +4,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\SimpananController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +32,5 @@ Route::group(['middleware' => ['auth', 'permissions:view-dashboard']], function 
 Route::get('/error/403', [ErrorController::class, 'forbidden'])->name('error.403');
 Route::resource('anggota', AnggotaController::class)->except(['show']);
 Route::get('anggota/data', [AnggotaController::class, 'getData'])->name('anggota.data');
+Route::resource('simpanan', SimpananController::class)->except(['show']);
+Route::get('simpanan/data', [SimpananController::class, 'data'])->name('simpanan.data');

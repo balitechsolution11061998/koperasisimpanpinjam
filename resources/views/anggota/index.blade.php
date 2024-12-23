@@ -17,7 +17,7 @@
                     <table class="table table-bordered table-responsive" id="anggotaTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>No</th> <!-- Index Column -->
                                 <th>Nama</th>
                                 <th>Alamat</th>
                                 <th>Nomor Telepon</th>
@@ -93,7 +93,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Include Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <!-- Include jQuery Validation CSS (optional) -->
 @endsection
 
 @section('js')
@@ -122,13 +121,30 @@
                 responsive: true, // Enable responsive feature
                 ajax: "{{ route('anggota.data') }}",
                 columns: [
-                    { data: 'id_anggota', name: 'id_anggota' },
+                    {
+                        data: null, // Use null for index column
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1; // Calculate index
+                        },
+                        orderable: false // Disable ordering for index column
+                    },
                     { data: 'nama', name: 'nama' },
                     { data: 'alamat', name: 'alamat' },
                     { data: 'nomor_telepon', name: 'nomor_telepon' },
                     { data: 'email', name: 'email' },
                     { data: 'tanggal_daftar', name: 'tanggal_daftar' },
-                    { data: 'status_keanggotaan', name: 'status_keanggotaan' },
+                    {
+                        data: 'status_keanggotaan',
+                        name: 'status_keanggotaan',
+                        render: function(data) {
+                            // Render status as a badge
+                            if (data === 'Aktif') {
+                                return '<span class="badge bg-success">Aktif</span>';
+                            } else {
+                                return '<span class="badge bg-danger">Tidak Aktif</span>';
+                            }
+                        }
+                    },
                     {
                         data: 'action',
                         name: 'action',
@@ -168,7 +184,24 @@
             });
 
             // Validate and submit the edit form
-
+            $('#editForm').validate({
+                submitHandler: function(form) {
+                    var id = $('#editId').val();
+                    $.ajax({
+                        type: "PUT",
+                        url: "anggota/" + id,
+                        data: $(form).serialize(),
+                        success: function(response) {
+                            $('#editModal').modal('hide');
+                            table.ajax.reload();
+                            toastr.success('Member updated successfully!'); // Show success message
+                        },
+                        error: function(xhr) {
+                            toastr.error('Failed to update member.'); // Show error message
+                        }
+                    });
+                }
+            });
 
             // Delete member
             $('#anggotaTable').on('click', '.delete', function() {
