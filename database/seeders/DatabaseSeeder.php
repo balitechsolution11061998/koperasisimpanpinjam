@@ -52,9 +52,9 @@ class DatabaseSeeder extends Seeder
             \Log::info('Created Permission:', ['id' => $createdPermission->id, 'name' => $createdPermission->name]);
         }
 
-        // Assign permissions to roles
-        $managerRole = Role::where('name', 'manager')->first();
-        $managerRole->givePermissions(['manage_users', 'view_reports', 'create_payments', 'read_payments', 'update_payments', 'delete_payments', 'view-dashboard']);
+        // Assign all permissions to the admin role
+        $adminRole = Role::where('name', 'admin')->first();
+        $adminRole->givePermissions(Permission::all()); // Assign all permissions to admin
 
         // Create users
         $users = [

@@ -6,8 +6,8 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
                     <h3 class="card-title">Dashboard Koperasi Simpan Pinjam</h3>
                 </div>
 
@@ -22,36 +22,36 @@
                     <p class="text-center">You are logged in!</p>
 
                     <div class="row mt-4">
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card text-white bg-primary shadow">
-                                <div class="card-body">
+                        <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                            <div class="card text-white bg-primary shadow flex-fill rounded">
+                                <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">
                                         <i class="fas fa-users"></i> Total Members
                                     </h5>
                                     <p class="card-text display-4">150</p>
-                                    <a href="#" class="btn btn-light">View Details</a>
+                                    <a href="#" class="btn btn-light mt-auto">View Details</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card text-white bg-success shadow">
-                                <div class="card-body">
+                        <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                            <div class="card text-white bg-success shadow flex-fill rounded">
+                                <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">
                                         <i class="fas fa-money-bill-wave"></i> Total Savings
                                     </h5>
                                     <p class="card-text display-4">Rp 1,500,000,000</p>
-                                    <a href="#" class="btn btn-light">View Details</a>
+                                    <a href="#" class="btn btn-light mt-auto">View Details</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card text-white bg-warning shadow">
-                                <div class="card-body">
+                        <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                            <div class="card text-white bg-warning shadow flex-fill rounded">
+                                <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">
                                         <i class="fas fa-hand-holding-usd"></i> Total Loans
                                     </h5>
                                     <p class="card-text display-4">Rp 750,000,000</p>
-                                    <a href="#" class="btn btn-light">View Details</a>
+                                    <a href="#" class="btn btn-light mt-auto">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
 
                     <h5 class="mt-4">Recent Transactions</h5>
                     <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
                                 <tr>
                                     <th>Date</th>
                                     <th>Member</th>

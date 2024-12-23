@@ -322,7 +322,7 @@ return [
         ],
         [
             'text' => 'Members',
-            'url' => 'admin/members',
+            'url' => 'anggota',
             'icon' => 'fas fa-fw fa-users',
         ],
         [

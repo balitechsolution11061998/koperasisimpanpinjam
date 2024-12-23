@@ -20,13 +20,12 @@ class VerifyPermission
     {
         // Check if the user is authenticated
         if (!auth()->check()) {
-            dd("masuk sini");
             return response()->json(['error' => 'Unauthorized'], 403);
-        }   
+        }
         // Check if the authenticated user has the required permission
         if (!auth()->user()->hasPermission($permission)) {
             // Optionally, you can redirect or return a response
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return redirect()->route('error.403'); // Ensure you have this route defined
         }
 
         return $next($request);
