@@ -10,30 +10,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <!-- Include Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        .card-header {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+        }
+        .badge {
+            font-size: 0.9rem;
+        }
+        .table th {
+            background-color: #f8f9fa; /* Light gray for table header */
+        }
+        .table td {
+            vertical-align: middle; /* Center align table cells */
+        }
+        .alert {
+            margin-bottom: 20px; /* Space between alerts and other content */
+        }
+    </style>
 @endsection
 
 @section('content')
-@if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-@if (session('error'))
-<div class="alert alert-danger">
-    {{ session('error') }}
-</div>
-@endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="container mt-4">
         <div class="card shadow-sm">
             <div class="card-header">
                 <h1 class="card-title">Data Simpanan</h1>
-                <a href="{{ route('simpanan.create') }}" class="btn btn-success btn-sm float-end">
+                <a href="{{ route('simpanan.create') }}" class="btn btn-light btn-sm float-end">
                     <i class="fas fa-plus"></i> Add Simpanan
                 </a>
             </div>
             <div class="card-body">
-                <h5>Total Simpanan: <span id="totalSimpanan">Rp. 0</span></h5> <!-- Placeholder for total savings -->
+                <h5>Total Simpanan: <span id="totalSimpanan" class="text-success">Rp. 0</span></h5> <!-- Placeholder for total savings -->
                 <div class="table-responsive"> <!-- Make the table responsive -->
                     <table class="table table-bordered table-striped" id="simpananTable">
                         <thead>
@@ -53,6 +72,7 @@
             </div>
         </div>
     </div>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -131,7 +151,19 @@
                     },
                     {
                         data: 'jenis_simpanan',
-                        name: 'jenis_simpanan'
+                        name: 'jenis_simpanan',
+                        render: function(data) {
+                            switch (data) {
+                                case 'Simpanan Pokok':
+                                    return '<span class="badge bg-primary">' + data + '</span>';
+                                case 'Simpanan Wajib':
+                                    return '<span class="badge bg-success">' + data + '</span>';
+                                case 'Simpanan Sukarela':
+                                    return '<span class="badge bg-warning">' + data + '</span>';
+                                default:
+                                    return data; // Fallback for any other types
+                            }
+                        }
                     },
                     {
                         data: 'jumlah',
@@ -186,22 +218,38 @@
                 ],
                 drawCallback: function(settings) {
                     var api = this.api();
-                    var total = api.rows().data().reduce(function(a, row) {
+                    var totalPokok = 0;
+                    var totalWajib = 0;
+                    var totalSukarela = 0;
+
+                    api.rows().data().each(function(row) {
                         var jumlah = parseFloat(row.jumlah);
                         var bunga = parseFloat(row.bunga) || 0;
                         var totalSimpanan = jumlah + (jumlah * bunga / 100);
-                        return a + (isNaN(totalSimpanan) ? 0 : totalSimpanan);
-                    }, 0);
 
-                    $('#totalSimpanan').text('Rp. ' + total.toLocaleString('id-ID', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }));
+                        // Accumulate totals based on jenis_simpanan
+                        switch (row.jenis_simpanan) {
+                            case 'Simpanan Pokok':
+                                totalPokok += totalSimpanan;
+                                break;
+                            case 'Simpanan Wajib':
+                                totalWajib += totalSimpanan;
+                                break;
+                            case 'Simpanan Sukarela':
+                                totalSukarela += totalSimpanan;
+                                break;
+                        }
+                    });
+
+                    // Update the total savings display
+                    $('#totalSimpanan').html(`
+                        <strong>Total Simpanan:</strong><br>
+                        Simpanan Pokok: Rp. ${totalPokok.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>
+                        Simpanan Wajib: Rp. ${totalWajib.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>
+                        Simpanan Sukarela: Rp. ${totalSukarela.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    `);
                 }
             });
-
-            // Format "Jumlah" input as Rupiah on keyup
-
 
             // Handle edit button click
             $(document).on('click', '.edit', function() {

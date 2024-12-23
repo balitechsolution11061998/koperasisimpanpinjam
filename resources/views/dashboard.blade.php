@@ -28,7 +28,7 @@
                                     <h5 class="card-title">
                                         <i class="fas fa-users"></i> Total Members
                                     </h5>
-                                    <p class="card-text display-4">150</p>
+                                    <p class="card-text display-4">{{ $totalMembers }}</p> <!-- Dynamic total members -->
                                     <a href="#" class="btn btn-light mt-auto">View Details</a>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                                     <h5 class="card-title">
                                         <i class="fas fa-money-bill-wave"></i> Total Savings
                                     </h5>
-                                    <p class="card-text display-4">Rp 1,500,000,000</p>
+                                    <p class="card-text display-4">Rp {{ number_format($totalSavings, 2, ',', '.') }}</p> <!-- Dynamic total savings -->
                                     <a href="#" class="btn btn-light mt-auto">View Details</a>
                                 </div>
                             </div>
@@ -56,6 +56,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <h5 class="mt-4">Pendapatan dan Pengeluaran</h5>
+                    <div id="incomeExpenseChart"></div> <!-- Chart container -->
 
                     <h5 class="mt-4">Recent Transactions</h5>
                     <div class="table-responsive">
@@ -104,4 +107,38 @@
         </div>
     </div>
 </div>
+
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // Prepare data for the chart
+        var options = {
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            series: [{
+                name: 'Pendapatan',
+                data: [{{ $totalIncome }}] // Replace with actual income data
+            }, {
+                name: 'Pengeluaran',
+                data: [{{ $totalExpenses }}] // Replace with actual expenses data
+            }],
+            xaxis: {
+                categories: ['Total']
+            },
+            colors: ['#008FFB', '#FF4560'], // Customize colors
+            dataLabels: {
+                enabled: true
+            },
+            title: {
+                text: 'Pendapatan dan Pengeluaran',
+                align: 'center'
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#incomeExpenseChart"), options);
+        chart.render();
+    </script>
+@endsection
 @stop
