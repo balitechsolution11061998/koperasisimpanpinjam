@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pinjaman; // Make sure to import your Pinjaman model
 use App\Models\Anggota; // Import the Anggota model if needed
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class LoanController extends Controller
@@ -28,13 +29,17 @@ class LoanController extends Controller
             return DataTables::of($loans)
                 ->addColumn('actions', function ($loan) {
                     return '
-                    <a href="' . route('loans.edit', $loan) . '" class="btn btn-warning">Edit</a>
+                    <a href="' . route('loans.edit', $loan) . '" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
                     <form action="' . route('loans.destroy', $loan) . '" method="POST" style="display:inline;">
                         ' . csrf_field() . '
                         ' . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this loan?\');">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
                     </form>
-                ';
+                    ';
                 })
                 ->editColumn('jumlah', function ($loan) {
                     return 'Rp ' . number_format($loan->jumlah, 2, ',', '.');
@@ -47,19 +52,38 @@ class LoanController extends Controller
         }
     }
 
+
     public function store(Request $request)
     {
+        // Validate the incoming request data
         $request->validate([
             'id_anggota' => 'required|exists:anggota,id_anggota',
-            'jumlah' => 'required|numeric',
+            'jumlah' => 'required',
             'bunga' => 'required|numeric',
             'tanggal_ajukan' => 'required|date',
             'status' => 'required|in:Disetujui,Belum Disetujui,Diambil',
         ]);
 
-        Pinjaman::create($request->all());
-        return redirect()->route('loans.index')->with('success', 'Loan created successfully.');
+        // Convert the 'jumlah' field to a numeric value
+        $data = $request->all();
+        $data['jumlah'] = str_replace('.', '', $data['jumlah']); // Remove periods
+        $data['jumlah'] = (float) $data['jumlah']; // Convert to float
+
+        try {
+            // Use a transaction to ensure data integrity
+            DB::transaction(function () use ($data) {
+                // Attempt to create a new loan entry
+                Pinjaman::create($data);
+            });
+
+            // Return a success response
+            return response()->json(['message' => 'Loan created successfully.'], 200);
+        } catch (\Exception $e) {
+            // Handle the exception and return an error response
+            return response()->json(['message' => 'Failed to create loan: ' . $e->getMessage()], 500);
+        }
     }
+
 
     public function show(Pinjaman $pinjaman)
     {
@@ -69,8 +93,9 @@ class LoanController extends Controller
     public function edit(Pinjaman $pinjaman)
     {
         $members = Anggota::all(); // Fetch all members for the dropdown
-        return view('loans.edit', compact('pinjaman', 'members'));
+        return view('loans.edit', ['loan' => $pinjaman, 'members' => $members]);
     }
+
 
     public function update(Request $request, Pinjaman $pinjaman)
     {

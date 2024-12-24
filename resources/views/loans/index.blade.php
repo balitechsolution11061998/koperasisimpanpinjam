@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <!-- Include Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .card-header {
             background-color: #007bff; /* Bootstrap primary color */
@@ -131,9 +133,9 @@
                 ajax: '{{ route('loans.data') }}',
                 columns: [
                     { data: 'id_pinjaman', name: 'id_pinjaman' },
-                    { data: 'anggota.nama', name: 'anggota.name' }, // Assuming 'name' is the column in anggota table
+                    { data: 'anggota.nama', name: 'anggota.nama' }, // Assuming 'nama' is the column in anggota table
                     { data: 'jumlah', name: 'jumlah', render: function(data) {
-                        return 'Rp ' + parseFloat(data).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                        return data;
                     }},
                     { data: 'bunga', name: 'bunga' },
                     { data: 'status', name: 'status' },
