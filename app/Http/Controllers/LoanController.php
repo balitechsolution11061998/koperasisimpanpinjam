@@ -90,10 +90,11 @@ class LoanController extends Controller
         return view('loans.show', compact('pinjaman'));
     }
 
-    public function edit(Pinjaman $pinjaman)
+    public function edit($id)
     {
-        $members = Anggota::all(); // Fetch all members for the dropdown
-        return view('loans.edit', ['loan' => $pinjaman, 'members' => $members]);
+        $anggota = Anggota::all(); // Fetch all members for the dropdown
+        $loan = Pinjaman::where('id_pinjaman',$id)->first();
+        return view('loans.edit', ['loan' => $loan, 'anggota' => $anggota]);
     }
 
 
