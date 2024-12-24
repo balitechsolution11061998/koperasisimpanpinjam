@@ -6,7 +6,7 @@ use App\Models\Pinjaman; // Make sure to import your Pinjaman model
 use App\Models\Anggota; // Import the Anggota model if needed
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
+use DataTables;
 
 class LoanController extends Controller
 {
