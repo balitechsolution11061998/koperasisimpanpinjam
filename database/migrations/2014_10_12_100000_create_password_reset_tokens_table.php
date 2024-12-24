@@ -13,10 +13,11 @@ return new class extends Migration
     {
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->charset('utf8')->collate('utf8_unicode_ci')->primary();
+            $table->string('email',191)->charset('utf8')->collate('utf8_unicode_ci')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
+
     }
 
     /**
