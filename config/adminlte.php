@@ -326,16 +326,42 @@ return [
             'icon' => 'fas fa-fw fa-users',
         ],
         [
-            'text' => 'Simpanan', // New menu item for Savings
-            'url' => 'simpanan', // Adjust this URL to match your route
-            'icon' => 'fas fa-fw fa-money-bill-wave', // You can choose an appropriate icon
+            'text' => 'Simpanan', // Menu item for Savings
+            'url' => 'simpanan', // URL to match your route
+            'icon' => 'fas fa-fw fa-money-bill-wave', // Icon for Savings
         ],
         [
-            'text' => 'Loans', // New menu item for Loans
-            'url' => 'loans', // Adjust this URL to match your route
+            'text' => 'Loans', // Menu item for Loans
+            'url' => 'loans', // URL to match your route
             'icon' => 'fas fa-fw fa-hand-holding-usd', // Icon for Loans
         ],
+        [
+            'text' => 'Transactions', // Menu item for Transactions
+            'url' => 'transactions', // URL to match your route
+            'icon' => 'fas fa-fw fa-exchange-alt', // Icon for Transactions
+        ],
+        [
+            'text' => 'Reports', // Menu item for Reports
+            'url' => 'reports', // URL to match your route
+            'icon' => 'fas fa-fw fa-chart-line', // Icon for Reports
+        ],
+        [
+            'text' => 'Settings', // Menu item for Settings
+            'url' => 'settings', // URL to match your route
+            'icon' => 'fas fa-fw fa-cogs', // Icon for Settings
+        ],
+        [
+            'text' => 'Notifications', // Menu item for Notifications
+            'url' => 'notifications', // URL to match your route
+            'icon' => 'fas fa-fw fa-bell', // Icon for Notifications
+        ],
+        [
+            'text' => 'Audit Logs', // Menu item for Audit Logs
+            'url' => 'audit-logs', // URL to match your route
+            'icon' => 'fas fa-fw fa-file-alt', // Icon for Audit Logs
+        ],
     ],
+
 
 
     /*
